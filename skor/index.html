@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>SetPoint</title>
+  <meta name="description" content="Padel & tennis scorekeeper: two phones in sync, each player scores their own points from the watch.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- HOME -->
+  <section id="home" class="screen active">
+    <header class="brand">
+      <div class="logo">Set<span>Point</span></div>
+      <button class="lang" id="langBtn">EN</button>
+    </header>
+    <p class="tagline" data-i18n="tagline"></p>
+    <div class="stack">
+      <button class="btn primary" id="hostBtn" data-i18n="host"></button>
+      <button class="btn" id="joinBtn" data-i18n="join"></button>
+      <button class="btn ghost" id="soloBtn" data-i18n="solo"></button>
+    </div>
+    <ol class="how">
+      <li data-i18n="how1"></li>
+      <li data-i18n="how2"></li>
+      <li data-i18n="how3"></li>
+    </ol>
+  </section>
+
+  <!-- SETUP (host / solo) -->
+  <section id="setup" class="screen">
+    <header class="bar"><button class="back" data-go="home">‹</button><h2 data-i18n="newMatch"></h2></header>
+    <form id="setupForm" class="form">
+      <label><span data-i18n="sport"></span>
+        <div class="seg" data-name="sport">
+          <button type="button" data-v="padel" class="on">Padel</button>
+          <button type="button" data-v="tennis" data-i18n="tennis"></button>
+        </div>
+      </label>
+      <label><span data-i18n="scoring"></span>
+        <div class="seg" data-name="golden">
+          <button type="button" data-v="1" class="on" data-i18n="golden"></button>
+          <button type="button" data-v="0" data-i18n="advantage"></button>
+        </div>
+      </label>
+      <label><span data-i18n="sets"></span>
+        <div class="seg" data-name="sets">
+          <button type="button" data-v="1" data-i18n="oneSet"></button>
+          <button type="button" data-v="3" class="on" data-i18n="bestOf3"></button>
+        </div>
+      </label>
+      <label><span data-i18n="myTeam"></span><input id="nameA" maxlength="20" autocomplete="off"></label>
+      <label class="solo-only"><span data-i18n="oppTeam"></span><input id="nameB" maxlength="20" autocomplete="off"></label>
+      <label><span data-i18n="firstServe"></span>
+        <div class="seg" data-name="firstServer">
+          <button type="button" data-v="A" class="on" data-i18n="us"></button>
+          <button type="button" data-v="B" data-i18n="them"></button>
+        </div>
+      </label>
+      <button class="btn primary" type="submit" id="setupGo"></button>
+    </form>
+  </section>
+
+  <!-- WAITING FOR OPPONENT -->
+  <section id="wait" class="screen">
+    <header class="bar"><button class="back" id="cancelHost">‹</button><h2 data-i18n="invite"></h2></header>
+    <p class="hint" data-i18n="scanHint"></p>
+    <div id="qr" class="qr"></div>
+    <div class="code" id="codeText">------</div>
+    <button class="btn" id="shareInvite" data-i18n="shareLink"></button>
+    <p class="status" id="waitStatus"></p>
+  </section>
+
+  <!-- JOIN -->
+  <section id="joinScreen" class="screen">
+    <header class="bar"><button class="back" data-go="home">‹</button><h2 data-i18n="join"></h2></header>
+    <form id="joinForm" class="form">
+      <label><span data-i18n="matchCode"></span><input id="joinCode" maxlength="6" autocapitalize="characters" autocomplete="off" class="codeinput"></label>
+      <label><span data-i18n="myTeam"></span><input id="joinName" maxlength="20" autocomplete="off"></label>
+      <button class="btn primary" type="submit" data-i18n="joinGo"></button>
+      <p class="status" id="joinStatus"></p>
+    </form>
+  </section>
+
+  <!-- MATCH -->
+  <section id="match" class="screen">
+    <div class="topline">
+      <span class="conn" id="conn"></span>
+      <table class="sets" id="setsTable"></table>
+      <button class="icon" id="menuBtn" aria-label="menu">⋯</button>
+    </div>
+    <div class="court">
+      <button class="side opp" id="sideOpp">
+        <span class="name" id="nameOpp"></span>
+        <span class="pts" id="ptsOpp">0</span>
+        <span class="games"><span id="gamesOpp">0</span> <small data-i18n="gamesLbl"></small></span>
+        <span class="serve" id="serveOpp">●</span>
+      </button>
+      <div class="mid">
+        <span class="badge" id="badge"></span>
+      </div>
+      <button class="side me" id="sideMe">
+        <span class="serve" id="serveMe">●</span>
+        <span class="games"><span id="gamesMe">0</span> <small data-i18n="gamesLbl"></small></span>
+        <span class="pts" id="ptsMe">0</span>
+        <span class="name" id="nameMe"></span>
+        <span class="tap" data-i18n="tapHint"></span>
+      </button>
+    </div>
+    <div class="actions">
+      <button class="btn small" id="undoBtn" data-i18n="undo"></button>
+      <button class="btn small" id="watchBtn" data-i18n="watchOn"></button>
+      <button class="btn small" id="voiceBtn"></button>
+    </div>
+    <div class="toast" id="toast"></div>
+  </section>
+
+  <!-- MENU -->
+  <div class="sheet" id="menu">
+    <div class="sheet-body">
+      <button class="btn" id="wakeBtn" data-i18n="keepAwake"></button>
+      <button class="btn" id="helpBtn" data-i18n="watchHelp"></button>
+      <button class="btn danger" id="endBtn" data-i18n="endMatch"></button>
+      <button class="btn ghost" id="closeMenu" data-i18n="close"></button>
+    </div>
+  </div>
+
+  <div class="sheet" id="help">
+    <div class="sheet-body">
+      <h3 data-i18n="watchHelp"></h3>
+      <ul class="helplist">
+        <li data-i18n="help1"></li>
+        <li data-i18n="help2"></li>
+        <li data-i18n="help3"></li>
+        <li data-i18n="help4"></li>
+      </ul>
+      <button class="btn ghost" id="closeHelp" data-i18n="close"></button>
+    </div>
+  </div>
+
+  <!-- FINISHED -->
+  <section id="done" class="screen">
+    <div class="trophy">🏆</div>
+    <h2 id="winnerText"></h2>
+    <div id="finalSets" class="final"></div>
+    <p class="hint" id="durationText"></p>
+    <div class="stack">
+      <button class="btn primary" id="shareCard" data-i18n="shareCard"></button>
+      <button class="btn" id="newMatch" data-i18n="newMatch"></button>
+    </div>
+  </section>
+
+  <audio id="media" loop playsinline></audio>
+  <script src="vendor/peerjs.min.js"></script>
+  <script src="vendor/qrcode.js"></script>
+  <script src="scoring.js"></script>
+  <script src="i18n.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
