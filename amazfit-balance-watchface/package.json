@@ -1,0 +1,16 @@
+{
+  "name": "balance-pro-watchface",
+  "version": "1.0.0",
+  "description": "Balance Pro - Zepp OS watch face for Amazfit Balance",
+  "main": "app.js",
+  "private": true,
+  "scripts": {
+    "assets": "python3 tools/generate_assets.py",
+    "build": "zeus build",
+    "preview": "zeus preview"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@zeppos/device-types": "^3.0.0"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "configVersion": "v3",
+  "app": {
+    "appId": 1000001,
+    "appName": "Balance Pro",
+    "appType": "watchface",
+    "version": {
+      "code": 1,
+      "name": "1.0.0"
+    },
+    "icon": "icon.png",
+    "vender": "faikozcan",
+    "description": "Professional hybrid watch face for Amazfit Balance: analog hands, date, steps, battery and heart rate with an always-on display mode."
+  },
+  "permissions": [
+    "data:user.hd.heart_rate",
+    "data:user.hd.step"
+  ],
+  "runtime": {
+    "apiVersion": {
+      "compatible": "1.0.0",
+      "target": "1.0.1",
+      "minVersion": "1.0.0"
+    }
+  },
+  "targets": {
+    "balance": {
+      "module": {
+        "watchface": {
+          "path": "watchface/index",
+          "main": 1,
+          "editable": 0,
+          "lockscreen": 1,
+          "hightCost": 0
+        }
+      },
+      "platforms": [
+        {
+          "st": "r",
+          "dw": 480
+        }
+      ],
+      "designWidth": 480
+    }
+  },
+  "i18n": {
+    "en-US": {
+      "appName": "Balance Pro"
+    },
+    "tr-TR": {
+      "appName": "Balance Pro"
+    }
+  },
+  "defaultLanguage": "en-US"
+}
