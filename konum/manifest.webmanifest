@@ -1,0 +1,14 @@
+{
+  "name": "Konum Kaydedici",
+  "short_name": "Konum",
+  "description": "Konumu belirli aralıklarla cihazda kaydeder ve harita uygulamasında açar.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1f6feb",
+  "lang": "tr",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
